@@ -45,7 +45,7 @@ namespace PhotoStudio
 
             for (int i = 0; i < byteBuffer.Length; i += 4)
             {
-                rgb = byteBuffer[i] * 0.11f;
+                rgb = byteBuffer[i] * 0.11f;       
                 rgb += byteBuffer[i + 1] * 0.59f;
                 rgb += byteBuffer[i + 2] * 0.3f;
 
@@ -149,6 +149,63 @@ namespace PhotoStudio
 
             Bitmap resultBitmap = new Bitmap(bmp.Width, bmp.Height);
             
+            BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0,
+                                        resultBitmap.Width, resultBitmap.Height),
+                                        ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            Marshal.Copy(pixelBuffer, 0, resultData.Scan0, pixelBuffer.Length);
+            resultBitmap.UnlockBits(resultData);
+
+            return resultBitmap;
+        }
+
+        public static Bitmap Brightness(Image img, int value)
+        {
+            Bitmap bmp = GetBitmap(img);
+            BitmapData sourceData = bmp.LockBits(new Rectangle(0, 0,
+                                        bmp.Width, bmp.Height),
+                                        ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+
+            Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+
+            bmp.UnlockBits(sourceData);
+
+            double red;
+            double green;
+            double blue;
+
+            for (int k = 0; k + 4 < pixelBuffer.Length; k += 4)
+            {
+                red = (pixelBuffer[k] * 100) / value;
+
+                green = (pixelBuffer[k + 1] * 100) / value;
+
+                blue = (pixelBuffer[k + 2] * value) / value;
+
+                if (red > 255)
+                    red = 255;
+                else if (red < 0)
+                    red = 0;
+
+                if (green > 255)
+                    green = 255;
+                else if (green < 0)
+                    green = 0;
+
+                if (blue > 255)
+                    blue = 255;
+                else if (blue < 0)
+                    blue = 0;
+
+                pixelBuffer[k] = (byte)blue;
+                pixelBuffer[k + 1] = (byte)green;
+                pixelBuffer[k + 2] = (byte)red;
+            }
+
+            Bitmap resultBitmap = new Bitmap(bmp.Width, bmp.Height);
+
             BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0,
                                         resultBitmap.Width, resultBitmap.Height),
                                         ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);

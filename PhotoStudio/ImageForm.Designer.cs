@@ -39,6 +39,9 @@
             this.contrastoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bilanciamentoDelBiancoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ripristinaImmagineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ruotaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -92,7 +95,8 @@
             this.modificaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.luminositàToolStripMenuItem,
             this.contrastoToolStripMenuItem,
-            this.bilanciamentoDelBiancoToolStripMenuItem});
+            this.bilanciamentoDelBiancoToolStripMenuItem,
+            this.ruotaToolStripMenuItem});
             this.modificaToolStripMenuItem.Name = "modificaToolStripMenuItem";
             this.modificaToolStripMenuItem.Size = new System.Drawing.Size(211, 24);
             this.modificaToolStripMenuItem.Text = "Modifica";
@@ -102,6 +106,7 @@
             this.luminositàToolStripMenuItem.Name = "luminositàToolStripMenuItem";
             this.luminositàToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.luminositàToolStripMenuItem.Text = "Luminosità";
+            this.luminositàToolStripMenuItem.Click += new System.EventHandler(this.luminositàToolStripMenuItem_Click);
             // 
             // contrastoToolStripMenuItem
             // 
@@ -115,6 +120,7 @@
             this.bilanciamentoDelBiancoToolStripMenuItem.Name = "bilanciamentoDelBiancoToolStripMenuItem";
             this.bilanciamentoDelBiancoToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.bilanciamentoDelBiancoToolStripMenuItem.Text = "Bilanciamento del bianco";
+            this.bilanciamentoDelBiancoToolStripMenuItem.Click += new System.EventHandler(this.bilanciamentoDelBiancoToolStripMenuItem_Click);
             // 
             // ripristinaImmagineToolStripMenuItem
             // 
@@ -122,6 +128,29 @@
             this.ripristinaImmagineToolStripMenuItem.Size = new System.Drawing.Size(211, 24);
             this.ripristinaImmagineToolStripMenuItem.Text = "Ripristina immagine";
             this.ripristinaImmagineToolStripMenuItem.Click += new System.EventHandler(this.ResetImage);
+            // 
+            // ruotaToolStripMenuItem
+            // 
+            this.ruotaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3});
+            this.ruotaToolStripMenuItem.Name = "ruotaToolStripMenuItem";
+            this.ruotaToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
+            this.ruotaToolStripMenuItem.Text = "Ruota";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
+            this.toolStripMenuItem2.Text = "-90°";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.RotateCCW);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(181, 26);
+            this.toolStripMenuItem3.Text = "+90°";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.RotateCW);
             // 
             // ImageForm
             // 
@@ -161,5 +190,8 @@
         public System.Windows.Forms.ToolStripMenuItem negativoToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem scalaDiGrigiToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem ripristinaImmagineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ruotaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
     }
 }

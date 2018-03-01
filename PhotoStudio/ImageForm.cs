@@ -14,9 +14,12 @@ namespace PhotoStudio
     {
         public string imgName;
         public Image img;
+        public Image backupImage;
 
-        Image backupImage;
         FormMain main;
+
+        Func<Image, Bitmap> negative;
+        Func<Image, Bitmap> greyScale;
 
         public ImageForm(Image img, FormMain main)
         {
@@ -24,6 +27,9 @@ namespace PhotoStudio
             this.img = img;
             this.main = main;
             backupImage = img;
+
+            greyScale = ImageEffects.Grayscale;
+            negative = ImageEffects.Negative;
         }
 
         private void ImageForm_Load(object sender, EventArgs e)
@@ -70,21 +76,56 @@ namespace PhotoStudio
         private void ApplyGreyscale(object sender, EventArgs e)
         {
             img = pictureBox.Image;
-            pictureBox.Image = ImageEffects.Grayscale(img);
+            pictureBox.Image = greyScale(img);
         }
 
         private void ApplyNegative(object sender, EventArgs e)
         {
             img = pictureBox.Image;
-            pictureBox.Image = ImageEffects.Negative(img);
+            pictureBox.Image = negative(img);
+        }
+
+        private void contrastoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Func<Image, int, Bitmap> effect = ImageEffects.Contrast;
+            EffectControlForm control = new EffectControlForm(this, "Contrasto", effect, 0, 0, 100);
+            control.ShowDialog();
+        }
+
+        private void luminositàToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Func<Image, int, Bitmap> effect = ImageEffects.Brightness;
+            EffectControlForm control = new EffectControlForm(this, "Luminosità", effect, 50, 0, 100);
+            control.ShowDialog();
+        }
+
+        private void bilanciamentoDelBiancoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Func<Image, int, Bitmap> effect = ImageEffects.Contrast;
+            EffectControlForm control = new EffectControlForm(this, "Bilanciamento del bianco", effect, 50, 0, 100);
+            control.ShowDialog();
         }
 
         #endregion
 
-        private void contrastoToolStripMenuItem_Click(object sender, EventArgs e)
+        // rotazione senso antiorario
+        private void RotateCCW(object sender, EventArgs e)
         {
-            EffectControlForm control = new EffectControlForm(this, "Contrasto", 50, 0, 100);
-            control.ShowDialog();
+            int height = Height;
+            int width = Width;
+            Height = width;
+            Width = height;
+            pictureBox.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+        }
+
+        // rotazione senso orario
+        private void RotateCW(object sender, EventArgs e)
+        {
+            int height = Height;
+            int width = Width;
+            Height = width;
+            Width = height;
+            pictureBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
     }
 }

@@ -16,9 +16,13 @@ namespace PhotoStudio
         string effectName;
         int defaultValue;
 
-        public EffectControlForm(ImageForm form, string effectName, int defaultValue, int minValue, int maxValue)
+        Func<Image, int, Bitmap> effect;
+
+        public EffectControlForm(ImageForm form, string effectName, Func<Image, int, Bitmap> effect, int defaultValue, int minValue, int maxValue)
         {
             InitializeComponent();
+
+            this.effect = effect;
 
             this.form = form;
             this.effectName = effectName;
@@ -50,7 +54,7 @@ namespace PhotoStudio
 
         private void ApplyEffect(int level)
         {
-            form.pictureBox.Image = ImageEffects.Contrast(form.pictureBox.Image, level);
+            form.pictureBox.Image = effect(form.backupImage, level);
         }
 
         private void ResetValue()
